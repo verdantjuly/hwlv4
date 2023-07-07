@@ -8,3 +8,7 @@
 ## ERD
 
 ![ERD](https://i.postimg.cc/QCm8TnkP/draw-SQL-hw1v4-erd-export-2023-07-07.png)
+
+## API
+
+https://verdantjuly.gitbook.io/hwlv4
