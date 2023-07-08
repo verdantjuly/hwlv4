@@ -48,6 +48,16 @@ class PostRepository {
     });
     return post;
   };
+  editPost = async (title, content, postId) => {
+    const post = await Posts.update(
+      {
+        title,
+        content,
+      },
+      { where: { postId } }
+    );
+    return post;
+  };
 }
 
 module.exports = PostRepository;

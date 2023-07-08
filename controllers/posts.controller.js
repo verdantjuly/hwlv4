@@ -17,6 +17,7 @@ class PostsController {
       });
     }
   };
+
   viewonepost = async (req, res) => {
     const { postId } = req.params;
     const post = await this.postService.findOnePost(postId);
@@ -34,6 +35,7 @@ class PostsController {
         .json({ errorMessage: "게시물 상세 조회에 실패하였습니다." });
     }
   };
+
   createPost = async (req, res) => {
     const { title, content } = req.body;
     const { userId } = res.locals;
@@ -47,6 +49,22 @@ class PostsController {
       res.status(200).json({ message: "게시물 작성에 성공하였습니다." });
     } else {
       res.status(400).json({ errorMessage: "게시물 작성에 실패하였습니다." });
+    }
+  };
+
+  editPost = async (req, res) => {
+    const { title, content } = req.body;
+    const { postId } = req.params;
+    if (!title || !content) {
+      res.status(400).json({
+        errorMessage: "미입력된 항목이 있습니다. 모든 항목을 입력해 주세요.",
+      });
+    }
+    const post = await this.postService.editPost(title, content, postId);
+    if (post) {
+      res.status(200).json({ message: "게시물 수정에 성공하였습니다." });
+    } else {
+      res.status(400).json({ errorMessage: "게시물 수정에 실패하였습니다." });
     }
   };
 }

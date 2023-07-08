@@ -10,6 +10,7 @@ class PostService {
       return {
         nickname: post.nickname,
         title: post.title,
+        content: post.content,
         createdAt: post.createdAt,
         likesCount: post.likesCount,
       };
@@ -21,20 +22,19 @@ class PostService {
     return {
       nickname: onePost.nickname,
       title: onePost.title,
+      content: onePost.content,
       createdAt: onePost.createdAt,
       likesCount: onePost.likesCount,
     };
   };
-  createOnePost = async (title, content, userId) => {
-    const createPost = await this.postRepository.createOnePost(
-      title,
-      content,
-      userId
-    );
+  editPost = async (title, content, postId) => {
+    const editPost = await this.postRepository.editPost(title, content, postId);
 
     return {
-      title: createPost.title,
-      createdAt: createPost.createdAt,
+      title: editPost.title,
+      content: editPost.content,
+      createdAt: editPost.createdAt,
+      updatedAt: editPost.updatedAt,
     };
   };
 }
