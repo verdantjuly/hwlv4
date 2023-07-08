@@ -7,7 +7,7 @@
 
 ## ERD
 
-![ERD](https://i.postimg.cc/QCm8TnkP/draw-SQL-hw1v4-erd-export-2023-07-07.png)
+![ERD](https://i.postimg.cc/wj37JJ4v/draw-SQL-hw1v4-erd-export-2023-07-08.png)
 
 ## API
 

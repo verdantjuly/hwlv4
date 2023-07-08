@@ -21,17 +21,31 @@ module.exports = (sequelize, DataTypes) => {
   Likes.init(
     {
       likeId: {
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true,
-        type: DataTypes.UUID,
+        unique: true,
+        type: DataTypes.INTEGER,
       },
       userId: {
         allowNull: false,
-        type: DataTypes.UUID,
+        unique: true,
+        type: DataTypes.INTEGER,
       },
       postId: {
         allowNull: false,
-        type: DataTypes.UUID,
+        unique: true,
+        type: DataTypes.INTEGER,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
       },
     },
     {

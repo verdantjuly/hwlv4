@@ -6,19 +6,41 @@ module.exports = {
       commentId: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.UUID,
+        unique: true,
+        autoIncrement: true,
+        type: Sequelize.INTEGER,
       },
       userId: {
         allowNull: false,
-        type: Sequelize.UUID,
+        unique: true,
+        references: {
+          model: "Users",
+          key: "userId",
+        },
+        type: Sequelize.INTEGER,
       },
       postId: {
         allowNull: false,
-        type: Sequelize.UUID,
+        unique: true,
+        references: {
+          model: "Posts",
+          key: "postId",
+        },
+        type: Sequelize.INTEGER,
       },
       content: {
         allowNull: false,
         type: Sequelize.STRING,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now"),
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now"),
       },
     });
   },

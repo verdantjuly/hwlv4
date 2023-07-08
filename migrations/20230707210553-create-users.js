@@ -6,15 +6,28 @@ module.exports = {
       userId: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.UUID,
+        unique: true,
+        autoIncrement: true,
+        type: Sequelize.INTEGER,
       },
       nickname: {
         allowNull: false,
+        unique: true,
         type: Sequelize.STRING,
       },
       password: {
         allowNull: false,
         type: Sequelize.STRING,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now"),
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("now"),
       },
     });
   },

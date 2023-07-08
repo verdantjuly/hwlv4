@@ -25,17 +25,33 @@ module.exports = (sequelize, DataTypes) => {
   Users.init(
     {
       userId: {
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true,
-        type: DataTypes.UUID,
+        unique: true,
+        type: DataTypes.INTEGER,
       },
       nickname: {
         allowNull: false,
         type: DataTypes.STRING,
+        unique: {
+          args: true,
+          message: "중복된 닉네임이 존재합니다.",
+        },
       },
       password: {
         allowNull: false,
         type: DataTypes.STRING,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
       },
     },
     {
