@@ -58,6 +58,10 @@ class PostRepository {
     );
     return post;
   };
+  deletePost = async (postId) => {
+    const post = await Posts.destroy({ where: { postId } });
+    return post;
+  };
 }
 
 module.exports = PostRepository;

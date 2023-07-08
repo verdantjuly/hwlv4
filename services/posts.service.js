@@ -37,6 +37,16 @@ class PostService {
       updatedAt: editPost.updatedAt,
     };
   };
+  deletePost = async (postId) => {
+    const editPost = await this.postRepository.deletePost(postId);
+
+    return {
+      title: editPost.title,
+      content: editPost.content,
+      createdAt: editPost.createdAt,
+      updatedAt: editPost.updatedAt,
+    };
+  };
 }
 
 module.exports = PostService;
