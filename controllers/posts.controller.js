@@ -17,6 +17,17 @@ class PostsController {
       });
     }
   };
+  viewonepost = async (req, res) => {
+    const { postId } = req.params;
+    const post = await this.postService.findOnePost(postId);
+    if (post.postId) {
+      res.status(200).json({ post });
+    } else {
+      res
+        .status(400)
+        .json({ errorMessage: "게시물 상세 조회에 실패하였습니다." });
+    }
+  };
 }
 
 module.exports = PostsController;
