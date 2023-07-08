@@ -34,10 +34,7 @@ module.exports = (sequelize, DataTypes) => {
       nickname: {
         allowNull: false,
         type: DataTypes.STRING,
-        unique: {
-          args: true,
-          message: "중복된 닉네임이 존재합니다.",
-        },
+        unique: true,
       },
       password: {
         allowNull: false,
@@ -52,6 +49,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
+      },
+      token: {
+        type: DataTypes.STRING,
       },
     },
     {
