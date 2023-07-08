@@ -24,9 +24,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Posts.init(
     {
-      postid: {
+      postId: {
         allowNull: false,
         primaryKey: true,
+        unique: true,
+        autoIncrement: true,
         type: DataTypes.INTEGER,
       },
       title: {
@@ -39,7 +41,18 @@ module.exports = (sequelize, DataTypes) => {
       },
       userId: {
         allowNull: false,
-        type: DataTypes.UUID,
+        unique: true,
+        type: DataTypes.INTEGER,
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
       },
     },
     {
