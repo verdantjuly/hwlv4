@@ -67,7 +67,7 @@ class UsersController {
     }
     const target = await Users.findOne({ where: { nickname } });
     const match = await bcrypt.compare(password, target.password);
-    const userId = target._id;
+    const userId = target.userId;
     if (!match) {
       return res
         .status(400)
@@ -76,7 +76,10 @@ class UsersController {
       // cookies 에 리프레시 토큰이 없거나 만료 시간 체크 하여 만료일 때 재발급
       const existRefreshToken = req.cookies.refreshToken;
       const [authType, authToken] = (existRefreshToken ?? "").split(" ");
-      if (target.token == authToken && !JWT.verify(authToken, rsecretkey)) {
+      if (
+        (target.token == authToken && !JWT.verify(authToken, rsecretkey)) ||
+        !existRefreshToken
+      ) {
         const refreshToken = JWT.sign({ success: "success" }, rsecretkey, {
           expiresIn: 3600,
         });
@@ -84,6 +87,9 @@ class UsersController {
           expires: expires,
         });
         await this.userService.loginUser(nickname, refreshToken);
+      } else if (target.token !== authToken) {
+        console.log(`비정상적인 접근 userId:${userId}`);
+        return res.status(400).json({ message: "로그인에 실패하였습니다." });
       }
 
       const accessToken = JWT.sign({ userId }, secretkey, {

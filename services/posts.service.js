@@ -18,7 +18,24 @@ class PostService {
   findOnePost = async (postId) => {
     const onePost = await this.postRepository.findOnePost(postId);
 
-    return onePost;
+    return {
+      nickname: onePost.nickname,
+      title: onePost.title,
+      createdAt: onePost.createdAt,
+      likesCount: onePost.likesCount,
+    };
+  };
+  createOnePost = async (title, content, userId) => {
+    const createPost = await this.postRepository.createOnePost(
+      title,
+      content,
+      userId
+    );
+
+    return {
+      title: createPost.title,
+      createdAt: createPost.createdAt,
+    };
   };
 }
 

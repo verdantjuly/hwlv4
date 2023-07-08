@@ -17,6 +17,7 @@ module.exports = {
           model: "Users",
           key: "userId",
         },
+        onDelete: "CASCADE",
         type: Sequelize.INTEGER,
       },
       postId: {
@@ -26,6 +27,7 @@ module.exports = {
           model: "Posts",
           key: "postId",
         },
+        onDelete: "CASCADE",
         type: Sequelize.INTEGER,
       },
       content: {
