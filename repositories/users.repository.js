@@ -1,10 +1,22 @@
 const { Users } = require("../models");
+const JWT = require("jsonwebtoken");
+const rsecretkey = "lee";
 
 class UserRepository {
-  signupUser = async (nickname, password) => {
-    // ORM인 Sequelize에서 Posts 모델의 create 메소드를 사용해 데이터를 요청합니다.
-    const signupUserData = await Users.create({ nickname, password });
+  signupUser = async (nickname, password, refreshToken) => {
+    const signupUserData = await Users.create({
+      nickname,
+      password,
+      token: refreshToken,
+    });
     return signupUserData;
+  };
+  loginUser = async (nickname, refreshToken) => {
+    const loginUserData = await Users.update(
+      { token: refreshToken },
+      { where: { nickname } }
+    );
+    return loginUserData;
   };
 }
 
