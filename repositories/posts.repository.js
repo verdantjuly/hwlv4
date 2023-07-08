@@ -34,11 +34,18 @@ class PostRepository {
       where: { postId },
     });
 
-    const likesCount = Likes.count({
+    const likesCount = await Likes.count({
       where: { postId },
     });
-    post = { ...post, likesCount };
-
+    post.likesCount = likesCount;
+    return post;
+  };
+  createOnePost = async (title, content, userId) => {
+    const post = await Posts.create({
+      title,
+      content,
+      userId,
+    });
     return post;
   };
 }
