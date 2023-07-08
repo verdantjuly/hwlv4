@@ -55,7 +55,7 @@ class PostsController {
   editPost = async (req, res) => {
     const { title, content } = req.body;
     const { postId } = req.params;
-    if (!title || !content) {
+    if (!title || !content || !postId) {
       res.status(400).json({
         errorMessage: "미입력된 항목이 있습니다. 모든 항목을 입력해 주세요.",
       });
@@ -65,6 +65,20 @@ class PostsController {
       res.status(200).json({ message: "게시물 수정에 성공하였습니다." });
     } else {
       res.status(400).json({ errorMessage: "게시물 수정에 실패하였습니다." });
+    }
+  };
+  deletePost = async (req, res) => {
+    const { postId } = req.params;
+    if (!postId) {
+      res.status(400).json({
+        errorMessage: "미입력된 항목이 있습니다. 모든 항목을 입력해 주세요.",
+      });
+    }
+    const post = await this.postService.deletePost(postId);
+    if (post) {
+      res.status(200).json({ message: "게시물 삭제에 성공하였습니다." });
+    } else {
+      res.status(400).json({ errorMessage: "게시물 삭제에 실패하였습니다." });
     }
   };
 }

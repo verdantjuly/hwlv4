@@ -9,6 +9,6 @@ router.get("/posts", postsController.viewpostslist);
 router.get("/posts/:postId", postsController.viewonepost);
 router.post("/posts", authmiddleware, postsController.createPost);
 router.patch("/posts/:postId", authmiddleware, postsController.editPost);
-// router.delete("/posts/:postId", authmiddleware, postsController.deletepost);
+router.delete("/posts/:postId", authmiddleware, postsController.deletePost);
 
 module.exports = router;
