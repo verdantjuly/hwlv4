@@ -11,4 +11,4 @@
 
 ## API
 
-https://verdantjuly.gitbook.io/hwlv4
+https://verdantjuly.gitbook.io/hwlv4/

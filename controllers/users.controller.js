@@ -53,9 +53,7 @@ class UsersController {
         });
     } catch (err) {
       if (err.name === "SequelizeUniqueConstraintError") {
-        return res
-          .status(400)
-          .json({ errorMessage: "중복된 닉네임이 존재합니다." });
+        return res.status(400).json({ errorMessage: "중복된 닉네임입니다." });
       }
     }
   };
