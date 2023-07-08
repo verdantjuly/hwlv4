@@ -5,21 +5,17 @@ class PostsController {
 
   viewpostslist = async (req, res) => {
     const posts = await this.postService.findAllPost();
-    res.status(200).json({ data: posts });
-  };
-
-  createPost = async (req, res, next) => {
-    const { nickname, password, title, content } = req.body;
-
-    // 서비스 계층에 구현된 createPost 로직을 실행합니다.
-    const createPostData = await this.postService.createPost(
-      nickname,
-      password,
-      title,
-      content
-    );
-
-    res.status(201).json({ data: createPostData });
+    if (posts.length == 0) {
+      res
+        .status(200)
+        .json({ message: "게시물이 없습니다. 첫 작성자가 되어 주세요." });
+    } else if (posts.length > 1) {
+      res.status(200).json({ posts });
+    } else {
+      res.status(200).json({
+        errorMessage: "게시물 조회에 실패하였습니다.",
+      });
+    }
   };
 }
 
