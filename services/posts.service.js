@@ -15,6 +15,11 @@ class PostService {
       };
     });
   };
+  findOnePost = async (postId) => {
+    const onePost = await this.postRepository.findOnePost(postId);
+
+    return onePost;
+  };
 }
 
 module.exports = PostService;

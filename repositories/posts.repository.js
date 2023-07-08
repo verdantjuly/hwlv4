@@ -1,4 +1,4 @@
-const { Posts, Users } = require("../models");
+const { Posts, Users, Likes } = require("../models");
 
 class PostRepository {
   findAllPost = async () => {
@@ -21,6 +21,25 @@ class PostRepository {
     });
 
     return posts;
+  };
+  findOnePost = async (postId) => {
+    let post = await Posts.findOne({
+      include: [
+        {
+          model: Users,
+          attributes: ["nickname"],
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+      where: { postId },
+    });
+
+    const likesCount = Likes.count({
+      where: { postId },
+    });
+    post = { ...post, likesCount };
+
+    return post;
   };
 }
 
