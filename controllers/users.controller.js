@@ -5,9 +5,6 @@ const bcrypt = require("bcrypt");
 const secretkey = "dayoung";
 const rsecretkey = "lee";
 
-let expires = new Date();
-expires.setMinutes(expires.getMinutes() + 60);
-
 class UsersController {
   userService = new UserService();
 
@@ -39,13 +36,13 @@ class UsersController {
       const saltRound = 10;
       const salt = await bcrypt.genSalt(saltRound);
       const hashedPassword = await bcrypt.hash(password, salt);
-      const refreshToken = JWT.sign({ success: "success" }, rsecretkey, {
+      const refreshToken = JWT.sign({}, rsecretkey, {
         expiresIn: "7d",
       });
       await this.userService.signupUser(nickname, hashedPassword, refreshToken);
       return res
         .cookie("refreshToken", `Bearer ${refreshToken}`, {
-          expires: expires,
+          expiresIn: "7d",
         })
         .status(201)
         .json({
@@ -80,11 +77,11 @@ class UsersController {
         (target.token == authToken && !JWT.verify(authToken, rsecretkey)) ||
         !existRefreshToken
       ) {
-        const refreshToken = JWT.sign({ success: "success" }, rsecretkey, {
-          expiresIn: 3600,
+        const refreshToken = JWT.sign({}, rsecretkey, {
+          expiresIn: "7d",
         });
         res.cookie("refreshToken", `Bearer ${refreshToken}`, {
-          expires: expires,
+          expiresIn: "7d",
         });
         await this.userService.loginUser(nickname, refreshToken);
       } else if (target.token !== authToken) {
@@ -96,7 +93,7 @@ class UsersController {
         expiresIn: 3600,
       });
       res.cookie("accessToken", `Bearer ${accessToken}`, {
-        expires: expires,
+        expiresIn: 3600,
       });
       return res.status(200).json({ message: "로그인에 성공하였습니다." });
     }
