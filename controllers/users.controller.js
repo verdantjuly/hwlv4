@@ -2,8 +2,8 @@ const UserService = require("../services/users.service");
 const { Users } = require("../models");
 const JWT = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const secretkey = "dayoung";
-const rsecretkey = "lee";
+const secretkey = "";
+const rsecretkey = "";
 
 class UsersController {
   userService = new UserService();
