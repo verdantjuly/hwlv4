@@ -1,5 +1,14 @@
 # Node.js Lv.4
 
+## How To Run
+
+1. ./config/config.json 안의 항목들을 채워 주세요.
+2. controllers/users.controller.js 와 middlewares/auth-middleware.js  
+   상단의 secretkey 와 rsecretky를 채워 주세요. jwt의 시크릿키입니다.
+3. npm install
+4. npx sequelize db:create
+5. npx sequelize db:migrate
+
 ## Q & A
 
 1. 좋아요 API는 어떻게 구현하였나요? 만약 1개로 구현하였다면, 분기 처리는 어떻게 처리하였나요?

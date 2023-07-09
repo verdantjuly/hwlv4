@@ -1,6 +1,6 @@
 const JWT = require("jsonwebtoken");
-const secretkey = "dayoung";
-const rsecretkey = "lee";
+const secretkey = "";
+const rsecretkey = "";
 
 module.exports = async (req, res, next) => {
   const { accessToken } = req.cookies;
