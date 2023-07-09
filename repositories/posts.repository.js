@@ -9,7 +9,6 @@ class PostRepository {
           attributes: ["nickname"],
         },
       ],
-      order: [["createdAt", "DESC"]],
     });
     posts = await posts.map(async (post) => {
       const likesCount = await Likes.count({

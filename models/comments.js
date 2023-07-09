@@ -29,12 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       userId: {
         allowNull: false,
-        unique: true,
         type: DataTypes.INTEGER,
       },
       postId: {
         allowNull: false,
-        unique: true,
         type: DataTypes.INTEGER,
       },
       content: {
