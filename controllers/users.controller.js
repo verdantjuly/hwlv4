@@ -2,8 +2,8 @@ const UserService = require("../services/users.service");
 const { Users } = require("../models");
 const JWT = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const secretkey = "";
-const rsecretkey = "";
+const secretkey = "dayoung";
+const rsecretkey = "lee";
 
 class UsersController {
   userService = new UserService();
@@ -63,6 +63,11 @@ class UsersController {
         .json({ errorMessage: "닉네임 또는 패스워드를 확인해주세요." });
     }
     const target = await Users.findOne({ where: { nickname } });
+    if (!target) {
+      return res
+        .status(400)
+        .json({ errorMessage: "닉네임 또는 패스워드를 확인해주세요." });
+    }
     const match = await bcrypt.compare(password, target.password);
     const userId = target.userId;
     if (!match) {
@@ -75,7 +80,8 @@ class UsersController {
       const [authType, authToken] = (existRefreshToken ?? "").split(" ");
       if (
         (target.token == authToken && !JWT.verify(authToken, rsecretkey)) ||
-        !existRefreshToken
+        !existRefreshToken ||
+        (target.token !== authToken && JWT.verify(authToken, rsecretkey))
       ) {
         const refreshToken = JWT.sign({}, rsecretkey, {
           expiresIn: "7d",
@@ -84,7 +90,10 @@ class UsersController {
           expiresIn: "7d",
         });
         await this.userService.loginUser(nickname, refreshToken);
-      } else if (target.token !== authToken) {
+      } else if (
+        target.token !== authToken &&
+        !JWT.verify(authToken, rsecretkey)
+      ) {
         console.log(`비정상적인 접근 userId:${userId}`);
         return res.status(400).json({ message: "로그인에 실패하였습니다." });
       }
