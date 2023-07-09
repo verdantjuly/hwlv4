@@ -39,6 +39,28 @@ class CommentsController {
       });
     }
   };
+  editcomment = async (req, res) => {
+    const { commentId } = req.params;
+    const { userId } = res.locals;
+    const { content } = req.body;
+    if (!content) {
+      return res.status(400).json({
+        errorMessage: "댓글 내용을 입력해주세요",
+      });
+    }
+    const comments = await this.commentService.updatecomment(
+      commentId,
+      userId,
+      content
+    );
+    if (comments) {
+      return res.status(200).json({ message: "댓글 수정에 성공하였습니다." });
+    } else {
+      return res.status(400).json({
+        errorMessage: "댓글 수정에 실패하였습니다.",
+      });
+    }
+  };
 }
 
 module.exports = CommentsController;

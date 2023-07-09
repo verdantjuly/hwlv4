@@ -27,6 +27,17 @@ class CommentService {
       createdAt: comment.createdAt,
     };
   };
+  updatecomment = async (commentId, userId, content) => {
+    const comment = await this.commentRepository.updatecomment(
+      commentId,
+      userId,
+      content
+    );
+    return {
+      content: comment.content,
+      createdAt: comment.createdAt,
+    };
+  };
 }
 
 module.exports = CommentService;

@@ -11,11 +11,11 @@ router.post(
   authmiddleware,
   commentsController.createcomments
 );
-// router.patch(
-//   "/posts/:postId/comments/:commentId",
-//   authmiddleware,
-//   usersController.loginUser
-// );
+router.patch(
+  "/posts/:postId/comments/:commentId",
+  authmiddleware,
+  commentsController.editcomment
+);
 // router.delete(
 //   "/posts/:postid/comments/:commentId",
 //   authmiddleware,
