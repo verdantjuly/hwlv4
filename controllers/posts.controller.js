@@ -1,11 +1,12 @@
 const PostService = require("../services/posts.service");
+const { Posts } = require("../models");
 
 class PostsController {
   postService = new PostService();
 
   viewpostslist = async (req, res) => {
     const posts = await this.postService.findAllPost();
-    if (!posts[0]) {
+    if (posts && !posts[0]) {
       return res
         .status(200)
         .json({ message: "게시물이 없습니다. 첫 작성자가 되어 주세요." });
@@ -20,8 +21,8 @@ class PostsController {
 
   viewonepost = async (req, res) => {
     const { postId } = req.params;
-    const post = await this.postService.findOnePost(postId);
     try {
+      const post = await this.postService.findOnePost(postId);
       if (postId) {
         return res.status(200).json({ post });
       } else if (postId) {
@@ -57,9 +58,16 @@ class PostsController {
   editPost = async (req, res) => {
     const { title, content } = req.body;
     const { postId } = req.params;
+    const { userId } = res.locals;
     if (!title || !content || !postId) {
       return res.status(400).json({
         errorMessage: "미입력된 항목이 있습니다. 모든 항목을 입력해 주세요.",
+      });
+    }
+    const target = await Posts.findOne({ where: { postId } });
+    if (!target || target.userId !== userId) {
+      return res.status(400).json({
+        errorMessage: "게시글 수정에 실패하였습니다.",
       });
     }
     const post = await this.postService.editPost(title, content, postId);
@@ -73,13 +81,20 @@ class PostsController {
   };
   deletePost = async (req, res) => {
     const { postId } = req.params;
+    const { userId } = res.locals;
     if (!postId) {
       return res.status(400).json({
         errorMessage: "미입력된 항목이 있습니다. 모든 항목을 입력해 주세요.",
       });
     }
+    const target = await Posts.findOne({ where: { postId } });
+    if (!target || target.userId !== userId) {
+      return res.status(400).json({
+        errorMessage: "게시글 삭제에 실패하였습니다.",
+      });
+    }
     const post = await this.postService.deletePost(postId);
-    if (post && !post.postId) {
+    if (post) {
       return res.status(200).json({ message: "게시물 삭제에 성공하였습니다." });
     } else {
       return res

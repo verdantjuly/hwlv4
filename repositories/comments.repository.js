@@ -14,15 +14,21 @@ class CommentRepository {
     return comments;
   };
   writecomment = async (postId, userId, content) => {
-    let comments = await Comments.create({ postId, userId, content });
-    return comments;
+    let comment = await Comments.create({ postId, userId, content });
+    return comment;
   };
+
   updatecomment = async (commentId, userId, content) => {
-    let comments = await Comments.update(
+    let comment = await Comments.update(
       { content },
       { where: { userId, commentId } }
     );
-    return comments;
+    return comment;
+  };
+
+  removecomment = async (commentId, userId) => {
+    let comment = await Comments.destroy({ where: { userId, commentId } });
+    return comment;
   };
 }
 module.exports = CommentRepository;

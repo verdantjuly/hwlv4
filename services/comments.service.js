@@ -38,6 +38,16 @@ class CommentService {
       createdAt: comment.createdAt,
     };
   };
+  removecomment = async (commentId, userId) => {
+    const comment = await this.commentRepository.removecomment(
+      commentId,
+      userId
+    );
+    return {
+      content: comment.content,
+      createdAt: comment.createdAt,
+    };
+  };
 }
 
 module.exports = CommentService;

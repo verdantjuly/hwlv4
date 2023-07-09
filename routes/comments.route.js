@@ -16,10 +16,10 @@ router.patch(
   authmiddleware,
   commentsController.editcomment
 );
-// router.delete(
-//   "/posts/:postid/comments/:commentId",
-//   authmiddleware,
-//   usersController.loginUser
-// );
+router.delete(
+  "/posts/:postid/comments/:commentId",
+  authmiddleware,
+  commentsController.deletecomment
+);
 
 module.exports = router;
