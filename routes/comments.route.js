@@ -6,11 +6,11 @@ const CommentsController = require("../controllers/comments.controller.js");
 const commentsController = new CommentsController();
 
 router.get("/posts/:postId/comments", commentsController.viewcomments);
-// router.post(
-//   "/posts/:postId/comments",
-//   authmiddleware,
-//   usersController.signupUser
-// );
+router.post(
+  "/posts/:postId/comments",
+  authmiddleware,
+  commentsController.createcomments
+);
 // router.patch(
 //   "/posts/:postId/comments/:commentId",
 //   authmiddleware,

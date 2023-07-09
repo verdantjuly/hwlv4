@@ -16,6 +16,17 @@ class CommentService {
       };
     });
   };
+  writecomment = async (postId, userId, content) => {
+    const comment = await this.commentRepository.writecomment(
+      postId,
+      userId,
+      content
+    );
+    return {
+      content: comment.content,
+      createdAt: comment.createdAt,
+    };
+  };
 }
 
 module.exports = CommentService;
