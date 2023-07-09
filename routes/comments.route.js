@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const authmiddleware = require("../middlewares/auth-middleware.js");
-const UsersController = require("../controllers/posts.controller.js");
-const usersController = new UsersController();
+const CommentsController = require("../controllers/comments.controller.js");
+const commentsController = new CommentsController();
 
-// router.get("/posts/:postId/comments", usersController.loginUser);
+router.get("/posts/:postId/comments", commentsController.viewcomments);
 // router.post(
 //   "/posts/:postId/comments",
 //   authmiddleware,
