@@ -16,9 +16,9 @@ class LikesController {
     const { userId } = res.locals;
     const likes = await this.likeService.likeslist(userId);
     if (likes) {
-      res.status(200).json({ message: "좋아요 게시글 조회에 성공하였습니다." });
+      res.status(200).json(likes);
     } else {
-      res.status(400).json({ message: "좋아요 적용에 실패하였습니다." });
+      res.status(400).json({ message: "좋아요 게시글 조회에 실패하였습니다." });
     }
   };
 }
