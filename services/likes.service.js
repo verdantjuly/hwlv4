@@ -9,6 +9,21 @@ class LikeService {
       userId: liker.userId,
     };
   };
+  likeslist = async (userId) => {
+    const likeslist = await this.likeRepository.likeslist(userId);
+    likeslist.sort((a, b) => {
+      return b.likesCount - a.likesCount;
+    });
+    return likeslist.map((post) => {
+      return {
+        postId: post.postId,
+        nickname: post.nickname,
+        title: post.title,
+        createdAt: post.createdAt,
+        likesCount: post.likesCount,
+      };
+    });
+  };
 }
 
 module.exports = LikeService;
