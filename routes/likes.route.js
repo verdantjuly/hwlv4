@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const authmiddleware = require("../middlewares/auth-middleware.js");
-const UsersController = require("../controllers/posts.controller.js");
-const usersController = new UsersController();
+const LikesController = require("../controllers/likes.controller.js");
+const likesController = new LikesController();
 
-// router.get("/likes", authmiddleware, usersController.loginUser);
-// router.post("/posts/:postId/like", authmiddleware, usersController.signupUser);
+router.post("/posts/:postId/like", authmiddleware, likesController.liker);
+// router.get("/likes", authmiddleware, likesController.likeslist);
 
 module.exports = router;

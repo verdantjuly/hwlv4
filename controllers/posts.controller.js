@@ -5,11 +5,11 @@ class PostsController {
 
   viewpostslist = async (req, res) => {
     const posts = await this.postService.findAllPost();
-    if (posts.length == 0) {
+    if (!posts[0]) {
       res
         .status(200)
         .json({ message: "게시물이 없습니다. 첫 작성자가 되어 주세요." });
-    } else if (posts.length > 1) {
+    } else if (posts) {
       res.status(200).json({ posts });
     } else {
       res.status(400).json({
@@ -75,7 +75,7 @@ class PostsController {
       });
     }
     const post = await this.postService.deletePost(postId);
-    if (post) {
+    if (post && !post.postId) {
       res.status(200).json({ message: "게시물 삭제에 성공하였습니다." });
     } else {
       res.status(400).json({ errorMessage: "게시물 삭제에 실패하였습니다." });
