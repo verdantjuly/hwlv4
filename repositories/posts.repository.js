@@ -28,7 +28,6 @@ class PostRepository {
           attributes: ["nickname"],
         },
       ],
-      order: [["createdAt", "DESC"]],
       where: { postId },
     });
 

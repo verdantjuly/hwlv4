@@ -5,6 +5,9 @@ class PostService {
 
   findAllPost = async () => {
     const allPost = await this.postRepository.findAllPost();
+    allPost.sort((prev, next) => {
+      return next.createdAt - prev.createdAt;
+    });
     return allPost.map((post) => {
       return {
         nickname: post.User.nickname,

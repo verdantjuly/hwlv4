@@ -1,6 +1,4 @@
 const { Users } = require("../models");
-const JWT = require("jsonwebtoken");
-const rsecretkey = "lee";
 
 class UserRepository {
   signupUser = async (nickname, password, refreshToken) => {
