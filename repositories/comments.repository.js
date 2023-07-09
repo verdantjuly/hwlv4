@@ -17,5 +17,12 @@ class CommentRepository {
     let comments = await Comments.create({ postId, userId, content });
     return comments;
   };
+  updatecomment = async (commentId, userId, content) => {
+    let comments = await Comments.update(
+      { content },
+      { where: { userId, commentId } }
+    );
+    return comments;
+  };
 }
 module.exports = CommentRepository;
