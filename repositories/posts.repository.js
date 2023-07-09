@@ -2,7 +2,7 @@ const { Posts, Users, Likes } = require("../models");
 
 class PostRepository {
   findAllPost = async () => {
-    const posts = await Posts.findAll({
+    let posts = await Posts.findAll({
       include: [
         {
           model: Users,
@@ -11,16 +11,15 @@ class PostRepository {
       ],
       order: [["createdAt", "DESC"]],
     });
-    await posts.map((post) => {
-      const likesCount = Likes.count({
-        where: {
-          postId: Number(post.postId),
-        },
+    posts = await posts.map(async (post) => {
+      const likesCount = await Likes.count({
+        where: { postId: post.postId },
       });
-      return { ...post, likesCount };
+      post.likesCount = likesCount;
+      return post;
     });
-
-    return posts;
+    const result = await Promise.all(posts);
+    return result;
   };
   findOnePost = async (postId) => {
     let post = await Posts.findOne({

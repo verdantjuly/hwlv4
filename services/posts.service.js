@@ -5,10 +5,9 @@ class PostService {
 
   findAllPost = async () => {
     const allPost = await this.postRepository.findAllPost();
-
     return allPost.map((post) => {
       return {
-        nickname: post.nickname,
+        nickname: post.User.nickname,
         title: post.title,
         content: post.content,
         createdAt: post.createdAt,
@@ -20,7 +19,7 @@ class PostService {
     const onePost = await this.postRepository.findOnePost(postId);
 
     return {
-      nickname: onePost.nickname,
+      nickname: onePost.User.nickname,
       title: onePost.title,
       content: onePost.content,
       createdAt: onePost.createdAt,
@@ -45,6 +44,18 @@ class PostService {
       content: editPost.content,
       createdAt: editPost.createdAt,
       updatedAt: editPost.updatedAt,
+    };
+  };
+  createOnePost = async (title, content, userId) => {
+    const createPost = await this.postRepository.createOnePost(
+      title,
+      content,
+      userId
+    );
+
+    return {
+      title: createPost.title,
+      createdAt: createPost.createdAt,
     };
   };
 }
