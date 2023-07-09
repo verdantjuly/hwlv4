@@ -13,5 +13,9 @@ class CommentRepository {
     });
     return comments;
   };
+  writecomment = async (postId, userId, content) => {
+    let comments = await Comments.create({ postId, userId, content });
+    return comments;
+  };
 }
 module.exports = CommentRepository;
