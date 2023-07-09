@@ -16,5 +16,12 @@ class LikeRepository {
       return like;
     }
   };
+  likeslist = async (userId) => {
+    const target = await Likes.findAll(
+      { where: { userId } },
+      { attributes: ["postId"] }
+    );
+    console.log(target);
+  };
 }
 module.exports = LikeRepository;
