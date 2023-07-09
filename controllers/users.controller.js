@@ -94,6 +94,7 @@ class UsersController {
         target.token !== authToken &&
         !JWT.verify(authToken, rsecretkey)
       ) {
+        res.clearCookie("accessToken")
         console.log(`비정상적인 접근 userId:${userId}`);
         return res.status(400).json({ message: "로그인에 실패하였습니다." });
       }
