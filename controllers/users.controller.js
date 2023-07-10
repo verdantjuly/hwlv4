@@ -2,8 +2,8 @@ const UserService = require("../services/users.service");
 const { Users } = require("../models");
 const JWT = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const secretkey = "";
-const rsecretkey = "";
+const secretkey = "dayoung";
+const rsecretkey = "lee";
 
 class UsersController {
   userService = new UserService();
@@ -69,16 +69,23 @@ class UsersController {
         .json({ errorMessage: "닉네임 또는 패스워드를 확인해주세요." });
     }
     const match = await bcrypt.compare(password, target.password);
-    const userId = target.userId;
     if (!match) {
       return res
         .status(400)
         .json({ errorMessage: "닉네임 또는 패스워드를 확인해주세요." });
     } else {
-      // cookies 에 리프레시 토큰이 없거나 만료 시간 체크 하여 만료일 때 재발급
       const existRefreshToken = req.cookies.refreshToken;
       const [authType, authToken] = (existRefreshToken ?? "").split(" ");
-      if (
+      const userId = target.userId;
+      if (target.token == authToken && JWT.verify(authToken, rsecretkey)) {
+        const accessToken = JWT.sign({ userId }, secretkey, {
+          expiresIn: 3600,
+        });
+        res.cookie("accessToken", `Bearer ${accessToken}`, {
+          expiresIn: 3600,
+        });
+        return res.status(200).json({ message: "로그인에 성공하였습니다." });
+      } else if (
         (target.token == authToken && !JWT.verify(authToken, rsecretkey)) ||
         !existRefreshToken ||
         (target.token !== authToken && JWT.verify(authToken, rsecretkey))
@@ -94,18 +101,11 @@ class UsersController {
         target.token !== authToken &&
         !JWT.verify(authToken, rsecretkey)
       ) {
-        res.clearCookie("accessToken")
+        res.clearCookie("refreshToken");
+        res.clearCookie("accessToken");
         console.log(`비정상적인 접근 userId:${userId}`);
         return res.status(400).json({ message: "로그인에 실패하였습니다." });
       }
-
-      const accessToken = JWT.sign({ userId }, secretkey, {
-        expiresIn: 3600,
-      });
-      res.cookie("accessToken", `Bearer ${accessToken}`, {
-        expiresIn: 3600,
-      });
-      return res.status(200).json({ message: "로그인에 성공하였습니다." });
     }
   };
 }
