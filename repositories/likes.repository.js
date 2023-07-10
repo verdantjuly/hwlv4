@@ -16,35 +16,7 @@ class LikeRepository {
       return like;
     }
   };
-  // likeslist = async (userId) => {
-  //   const target = await Likes.findAll({ where: { userId } });
-  //   const postIds = target.map((like) => {
-  //     return like.postId;
-  //   });
-  //   const allpost = await Posts.findAll({
-  //     include: [
-  //       {
-  //         model: Users,
-  //         attributes: ["nickname"],
-  //       },
-  //     ],
-  //   });
-  //   const result = allpost
-  //     .map(async (post) => {
-  //       const likesCount = await Likes.count({
-  //         where: { postId: post.postId },
-  //       });
-  //       post.likesCount = likesCount;
-  //       if (postIds.includes(post.postId)) {
-  //         return post;
-  //       } else {
-  //         return 0;
-  //       }
-  //     })
-  //     .filter((item) => item.postId == true);
-  //   const answer = await Promise.all(result);
-  //   return answer;
-  // };
+ 
   likeslist = async (userId) => {
     const target = await Likes.findAll({ where: { userId } });
     const postIds = target.map((like) => {
