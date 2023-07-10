@@ -2,8 +2,8 @@ const UserService = require("../services/users.service");
 const { Users } = require("../models");
 const JWT = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const secretkey = "";
-const rsecretkey = "";
+const secretkey = "dayoung";
+const rsecretkey = "lee";
 
 class UsersController {
   userService = new UserService();
@@ -97,6 +97,13 @@ class UsersController {
           expiresIn: "7d",
         });
         await this.userService.loginUser(nickname, refreshToken);
+        const accessToken = JWT.sign({ userId }, secretkey, {
+          expiresIn: 3600,
+        });
+        res.cookie("accessToken", `Bearer ${accessToken}`, {
+          expiresIn: 3600,
+        });
+        return res.status(200).json({ message: "로그인에 성공하였습니다." });
       } else if (
         target.token !== authToken &&
         !JWT.verify(authToken, rsecretkey)
