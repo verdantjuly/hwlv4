@@ -29,3 +29,7 @@
 ## API
 
 https://verdantjuly.gitbook.io/hwlv4/
+
+## Lv.5 에서 업데이트 예정
+
+- bcrypt 암호화 위치 이동 (controller > service)
